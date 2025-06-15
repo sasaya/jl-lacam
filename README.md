@@ -1,9 +1,8 @@
 # jlLacam
 
-[![Build Status](https://github.com/sasaya/jlLacam.jl/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/sasaya/jlLacam.jl/actions/workflows/CI.yml?query=branch%3Amaster)
-
 このコードはKeisuke Okumura氏のpy-lacam-pibtをjuliaにベタ移植したものです。  
-ライセンス元の[py-lacam-pibt](https://github.com/sasaya/lacam/tree/pibt)に準じます。
+参照元は右記です。 [py-lacam-pibt](https://github.com/sasaya/lacam/tree/pibt)　Copyright 2024 (c) Keisuke Okumura
+
 
 ### How to use
 - stand alone  
