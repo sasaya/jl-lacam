@@ -7,7 +7,6 @@ mutable struct DistTable
     function DistTable(grid, goal)
         0 in Iterators.flatten(goal) && throw("goal should not include 0")
         Q = [goal]
-        # vector型をkeyにすることで'value = table[goal]'と書ける.
         table = Dict([y, x] => length(grid) for y in axes(grid,1), x in axes(grid,2))
         table[goal] = 0
         new(grid, vec(goal), table, Q)
@@ -24,9 +23,7 @@ function Base.get(dt::DistTable, target::AbstractArray{<:Integer})::Integer
     if dt.table[target] < length(dt.table)
         return dt.table[target]
     end
-    # pythonだとQはずっと DistTableで保持して
-    # 次の計算にも使いまわしているので、同じ仕様にする
-    # dt.Q = [dt.goal] # 使いまわさないならこれをつかう
+
     while length(dt.Q) > 0
         u = popfirst!(dt.Q) # need profile
         d = dt.table[u]
@@ -75,7 +72,7 @@ function funcPIBT(self::PIBT, Q_from::Config, Q_to::Config, i)
     sort!(C, by = x -> get(self.dist_tables[i], x))
 
     for v in C
-        if self.occupied_next[v] != self.NIL #ここは初期値かどうかなので、pyとjlのindexは関係ない
+        if self.occupied_next[v] != self.NIL
             continue
         end
         j = self.occupied_now[v]

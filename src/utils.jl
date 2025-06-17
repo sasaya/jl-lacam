@@ -119,7 +119,6 @@ function get_neighbors(grid::Matrix{Bool}, coordinate::Vector{Int}) ::Vector{Vec
     neigh = Vector{Vector{Int}}(undef,0)
 
     if !isvalid_coordinate(grid, coordinate)
-        # return push!(neigh, [0, 0])
         return neigh
     end
 

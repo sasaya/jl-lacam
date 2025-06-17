@@ -100,13 +100,12 @@ end
 
 
 function solve(st::LaCAMdata)
-    # println("start solving MAPF")
+    @info "start solving MAPF"
     dist_tables = [DistTable(st.grid, g) for g in st.goals]
     pibt = PIBT(dist_tables)
 
     # set search scheme
     OPEN::Vector{HighLevelNode} = []
-    # EXPLORED =dict[Config, HighLevelNode] = {}
     N_goal::Union{HighLevelNode, Nothing} = nothing  # ::Union{HighLevelNode, Nothing}
 
     # set initial node
@@ -127,11 +126,8 @@ function solve(st::LaCAMdata)
         if isnothing(N_goal) == true && N.Q == st.goals
             N_goal = N
             # st.info(1, f"initial solution found, cost={N_goal.g}")
-            # println("initial solution found, cost=$(N_goal.g)")
             @info "initial solution found, cost= $(N_goal.g)"
-            # no refinement -> terminate
             if st.flg_star == false
-                # println("break")
                 break
             end
         end
@@ -240,12 +236,8 @@ function get_order(self::LaCAMdata, Q::Config{Int}, dist_tables::Vector{DistTabl
     order = Vector(Base.OneTo(self.num_agents))
     
     # shuffle!(self.rng, order)
-    # println("order ", order)
     tmp = [get(dist_tables[x], Q[x]) for x in order]
-    # println("dist_tables get Q ", tmp)
-    # # println("dist_tables[3] ", dist_tables[3].table)
     sort!(order, by = x -> get(dist_tables[x], Q[x]), rev=true)
-    # println("order ", order)
     return order
 end
 
@@ -303,8 +295,3 @@ function get_edge_cost(self::LaCAMdata, Q_from::Config{Int}, Q_to::Config{Int}):
     end
     return cost
 end
-
-# end # module end
-
-# using BenchmarkTools
-# @benchmark LaCAM.solve(LaCAM.LaCAMdata(fill(true, 2, 3), [[1, 1], [1, 3]], [[1, 3], [1, 1]], true))
